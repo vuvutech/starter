@@ -24,7 +24,7 @@ export function createMetadata(override: Metadata): Metadata {
 }
 
 
-		// lib/metadata.ts
+// lib/metadata.ts
 export const baseUrl =
 	process.env.NODE_ENV === "development"
 		? new URL("http://localhost:3000")
