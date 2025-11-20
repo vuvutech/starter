@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { APIError, betterAuth } from "better-auth";
+import { betterAuth } from "better-auth";
 import {
   bearer,
   admin,
@@ -10,9 +10,7 @@ import {
   openAPI,
   oidcProvider,
   emailOTP,
-  createAuthMiddleware,
 } from "better-auth/plugins";
-import { createAuthClient } from "better-auth/client";
 import { adminClient } from "better-auth/client/plugins";
 import { reactInvitationEmail } from "./email/invitation";
 import { reactResetPasswordEmail } from "./email/rest-password";
@@ -20,72 +18,20 @@ import { resend } from "./email/resend";
 import { nextCookies } from "better-auth/next-js";
 import { baseUrl } from "./metadata";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { prisma } from "@/prisma/dbConnect";
-import { generateStudentId } from "@/app/actions/functions";
-import { render } from "@react-email/components";
 import VerifyEmail from "./email/VerifyEmail";
-
+import { prisma } from "./db";
 const from = process.env.BETTER_AUTH_EMAIL || "notifications@costrad.org";
+
+
 
 export const auth = betterAuth({
   appName: "College of Sustainable Transformation and Development",
 
   database: prismaAdapter(prisma, {
-    provider: "mongodb",
+    provider: "postgresql",
   }),
 
-  user: {
-    additionalFields: {
-      studentId: {
-        type: "string",
-        unique: true,
-      },
-    },
-  },
-  
-  databaseHooks: {
-    user: {
-      create: {
-        before: async (user) => {
-          const studentId = await generateStudentId();
-          return {
-            data: {
-              ...user,
-              studentId,
-              role: "USER", 
-            },
-          };
-        },
-        after: async (user) => {
-        //  
-        },
-      },
-    },
-   session: {
-    create: {
-      before: async (session) => {
-        const bannedUser = await prisma.user.findUnique({
-          where: { id: session.userId },
-          select: { banned: true },
-        });
 
-        if (bannedUser?.banned) {
-          // Returning false prevents the session from being created
-          
-          return false;
-        }
-
-        return { data: session };
-      },
-    },
-  },
-    account: {
-      // Account hooks
-    },
-    verification: {
-      // Verification hooks
-    },
-  },
   onAPIError: {
     throw: true,
     onError: (error, ctx) => {
@@ -97,26 +43,26 @@ export const auth = betterAuth({
   baseURL: baseUrl.toString(),
 
   emailVerification: {
-  autoSignInAfterVerification: true,
-  sendOnSignUp: true,
-  async sendVerificationEmail({ user, url }) {
-    await resend.emails.send({
-      from,
-      to: user.email,
-      subject: "Confirm your COSTrAD account",
-      react: VerifyEmail({
-        username: user.name || user.email,
-        verifyLink: url,
-      }),
-      // html: await render(
-      //   VerifyEmail({
-      //     username: user.name || user.email,
-      //     verifyLink: url,
-      //   })
-      // ),
-    });
+    autoSignInAfterVerification: true,
+    sendOnSignUp: true,
+    async sendVerificationEmail({ user, url }) {
+      await resend.emails.send({
+        from,
+        to: user.email,
+        subject: "Confirm your COSTrAD account",
+        react: VerifyEmail({
+          username: user.name || user.email,
+          verifyLink: url,
+        }),
+        // html: await render(
+        //   VerifyEmail({
+        //     username: user.name || user.email,
+        //     verifyLink: url,
+        //   })
+        // ),
+      });
+    },
   },
-},
   rateLimit: {
     enabled: true,
     max: 100,
@@ -155,14 +101,18 @@ export const auth = betterAuth({
     },
   },
   socialProviders: {
-    google: {
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
     },
-    microsoft: {
-      clientId: process.env.MICROSOFT_CLIENT_ID || "",
-      clientSecret: process.env.MICROSOFT_CLIENT_SECRET || "",
-    },
+    // google: {
+    //   clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    // },
+    // microsoft: {
+    //   clientId: process.env.MICROSOFT_CLIENT_ID || "",
+    //   clientSecret: process.env.MICROSOFT_CLIENT_SECRET || "",
+    // },
   },
   plugins: [
     adminClient(),
