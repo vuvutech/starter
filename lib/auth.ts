@@ -5,24 +5,19 @@ import {
   admin,
   magicLink,
 } from "better-auth/plugins";
-
-
 import { resend } from "./email/resend";
 import { nextCookies } from "better-auth/next-js";
-
-import { prismaAdapter } from "better-auth/adapters/prisma";
-
-import { prisma } from "./db";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "./database/drizzle";
 import { baseUrl } from "./metadata";
+
 const from = process.env.BETTER_AUTH_EMAIL || "notifications@costrad.org";
-
-
 
 export const auth = betterAuth({
   appName: "College of Sustainable Transformation and Development",
 
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
+  database: drizzleAdapter(db, {
+    provider: "pg",
   }),
 
 
