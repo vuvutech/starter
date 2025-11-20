@@ -1,0 +1,24 @@
+lib/auth-client.ts(14,23): error TS2307: Cannot find module 'sonner' or its corresponding type declarations.
+lib/auth.ts(24,35): error TS2307: Cannot find module '@/app/actions/functions' or its corresponding type declarations.
+lib/auth.ts(25,24): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/countries.ts(2,23): error TS2307: Cannot find module 'i18n-iso-countries' or its corresponding type declarations.
+lib/countries.ts(3,22): error TS2307: Cannot find module 'i18n-iso-countries/langs/en.json' or its corresponding type declarations.
+lib/email/VerifyEmail.tsx(12,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/admin-registration-approval.tsx(12,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/invitation.tsx(17,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/newsletter-confirmation-appreciation.tsx(10,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/newsletter-confirmation.tsx(10,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/resend.ts(1,24): error TS2307: Cannot find module 'resend' or its corresponding type declarations.
+lib/email/rest-password.tsx(14,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/email/welcome-to-institute.tsx(13,8): error TS2307: Cannot find module '@react-email/components' or its corresponding type declarations.
+lib/googleAnalytics.ts(2,41): error TS2307: Cannot find module '@google-analytics/data' or its corresponding type declarations.
+lib/metadata.ts(1,28): error TS2307: Cannot find module '@/config/site' or its corresponding type declarations.
+lib/nodemailer-mail.ts(2,24): error TS7016: Could not find a declaration file for module 'nodemailer'. '/home/piuso/dev/starter/node_modules/nodemailer/lib/nodemailer.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/nodemailer` if it exists or add a new declaration (.d.ts) file containing `declare module 'nodemailer';`
+lib/plugins.ts(1,30): error TS2305: Module '"better-auth/plugins"' has no exported member 'BetterAuthPlugin'.
+lib/seedCollection.ts(1,39): error TS2307: Cannot find module 'mongodb' or its corresponding type declarations.
+lib/utils.ts(1,39): error TS2307: Cannot find module 'clsx' or its corresponding type declarations.
+lib/utils.ts(2,25): error TS2307: Cannot find module 'tailwind-merge' or its corresponding type declarations.
+prisma/dbConnect.ts(1,30): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+prisma/prisma.ts(2,30): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
+types/institute.ts(1,46): error TS2307: Cannot find module '@prisma/client' or its corresponding type declarations.
